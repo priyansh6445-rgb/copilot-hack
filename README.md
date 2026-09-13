@@ -1,23 +1,26 @@
-# Coding with an AI pair programmer
+# Baithak
 
-[GitHub Copilot](https://github.com/features/copilot) is your AI pair programmer, built to support you throughout your development experience. As with any new tool, using GitHub Copilot requires learning a few new skills. This project is built to do exactly that, to give you an opportunity to build a project, using the language and tools you typically use, with GitHub Copilot.
+Editorial restaurant website built with React, Vite, Tailwind CSS, and Supabase.
 
-> **[Start hacking!](./hackathon.md)**
+## Local setup
 
-## Requirements
+```bash
+npm install
+cp .env.example .env.local
+# Add your Supabase URL and anon key to .env.local
+npm run dev
+```
 
-This project is configured with a [devcontainer](./.devcontainer/devcontainer.json), which can be [run locally](https://code.visualstudio.com/docs/devcontainers/containers) or in a [codespace](https://github.com/features/codespaces). Please refer to the [setup exercise](./content/0-get-started.md) for more information.
+Run `supabase/migrations/001_baithak.sql` in the Supabase SQL editor, then create an admin user under **Authentication -> Users**. The public site reads live menu items and settings from Supabase. If the database is empty or unavailable, it keeps the editorial shell usable and shows an explicit seasonal-menu empty state rather than inventing menu data. `/admin` is protected by Supabase email/password auth. Authenticated admins can manage menu items, categories, settings, and upload images to the public `menu-images` bucket.
 
-The project does assume you are familiar with programming, but is not prescriptive about language or framework choice.
+Only rows with `is_live = true` are exposed by the public menu query and its RLS policy. Keep the anon key in the frontend; never expose a Supabase service-role key.
 
-## License 
+## Commands
 
-This project is licensed under the terms of the MIT open source license. Please refer to [MIT](./LICENSE.txt) for the full terms.
+- `npm run build` - typecheck and production build
+- `npm run lint` - ESLint
+- `npm run dev` - local development server
 
-## Maintainers 
+## Project
 
-You can find the list of maintainers in [CODEOWNERS](./.github/CODEOWNERS)
-
-## Support
-
-This project is provided as-is, and may be updated over time. If you have questions, please [open an issue](/issues/new).
+This repository is a GitHub Copilot hacking project. See the original project resources in the repository for the devcontainer, setup exercise, license, maintainers, and support information.

@@ -1,0 +1,9 @@
+import { FormEvent, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
+
+export default function AdminLogin() {
+  const [email,setEmail]=useState(''); const [password,setPassword]=useState(''); const [error,setError]=useState(''); const nav=useNavigate()
+  async function submit(e: FormEvent) { e.preventDefault(); if (!supabase) return setError('Add Supabase environment variables first.'); const {error}=await supabase.auth.signInWithPassword({email,password}); if(error) setError(error.message); else nav('/admin') }
+  return <div className="grain flex min-h-screen items-center justify-center bg-ink px-6 text-cream"><div className="w-full max-w-md"><Link to="/" className="font-display text-4xl">baithak<span className="text-saffron">.</span></Link><p className="mt-16 text-[11px] uppercase tracking-[.25em] text-saffron">The back room</p><h1 className="mt-4 font-display text-5xl">Welcome back.</h1><form onSubmit={submit} className="mt-10 space-y-5"><label className="block text-xs uppercase tracking-widest text-cream/60">Email<input required type="email" value={email} onChange={e=>setEmail(e.target.value)} className="mt-2 w-full border-b border-cream/30 bg-transparent py-3 outline-none focus:border-saffron"/></label><label className="block text-xs uppercase tracking-widest text-cream/60">Password<input required type="password" value={password} onChange={e=>setPassword(e.target.value)} className="mt-2 w-full border-b border-cream/30 bg-transparent py-3 outline-none focus:border-saffron"/></label>{error&&<p className="text-sm text-saffron">{error}</p>}<button className="mt-5 w-full bg-saffron py-4 text-xs uppercase tracking-[.2em] text-ink">Sign in</button></form><Link to="/" className="mt-8 inline-block text-xs text-cream/50">← Back to baithak</Link></div></div>
+}
